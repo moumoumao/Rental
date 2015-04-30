@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+   <beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+   <aop:aspectj-autoproxy proxy-target-class="true"></aop:aspectj-autoproxy>
+   <context:component-scan base-package="com.rental"></context:component-scan>
+   
+	<!-- 配置数据源，这里为DBCP数据库连接池 -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+		<property name="url" value="jdbc:mysql://localhost:3306/rental?useUnicode=true&amp;characterEncoding=UTF-8"/>
+		<property name="username" value="root"/>
+		<property name="password" value="123456"/>
+		<property name="defaultAutoCommit" value="true"/>
+	</bean>
+	<!-- 配置session工场 -->
+	<!-- <bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean"> -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<!-- 设置数据库方言 -->
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<!-- 在控制台输出SQL语句 -->
+				<prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+			</props>
+		</property>
+		<!-- 配置映射文件 -->
+		<property name="annotatedClasses">
+			<list>
+				<value>com.rental.bean.TblAppoint</value>
+				<value>com.rental.bean.TblArea</value>
+				<value>com.rental.bean.TblCheckStream</value>
+				<value>com.rental.bean.TblFunction</value>
+				<value>com.rental.bean.TblPower</value>
+				<value>com.rental.bean.TblRole</value>
+				<value>com.rental.bean.TblRoom</value>
+				<value>com.rental.bean.TblRoomImage</value>
+				<value>com.rental.bean.TblType</value>
+				<value>com.rental.bean.TblUser</value>
+				<value>com.rental.bean.TblMessage</value>
+				<value>com.rental.bean.TblLove</value>
+			</list>
+		</property>
+	</bean>
+
+	 <!-- 事务管理 -->
+     <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+         <property name="sessionFactory" ref="sessionFactory" />
+     </bean>
+     <tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="insert*" propagation="REQUIRED"
+				rollback-for="Exception" />
+			<tx:method name="updateBacthTaskStatus"
+				propagation="REQUIRES_NEW" rollback-for="Exception" />
+			<tx:method name="save*" propagation="REQUIRED"
+				rollback-for="Exception" />
+			<tx:method name="add*" propagation="REQUIRED"
+				rollback-for="Exception" />
+			<tx:method name="up*"  propagation="REQUIRED"
+				rollback-for="Exception" />
+			<tx:method name="delete*" propagation="REQUIRED"
+				rollback-for="Exception" />
+			<tx:method name="*" propagation="SUPPORTS" read-only="false" /> 
+		</tx:attributes>
+	</tx:advice>
+	<aop:config>
+		<aop:pointcut id="txPointcut"
+			expression="(execution(* com.*.service.*.*(..))))" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut" />
+	</aop:config>
+
+    <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor" />
+
+	<!-- 配置hibernateTemplate，将session注入 -->
+ 	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<!-- 将hibernateTemplate注入Dao -->
+	<bean id="userDao" class="com.rental.dao.impl.UserDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+	<bean id="areaDao" class="com.rental.dao.impl.AreaDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+	<bean id="roleDao" class="com.rental.dao.impl.RoleDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+	<bean id="typeDao" class="com.rental.dao.impl.TypeDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+	<bean id="roomDao" class="com.rental.dao.impl.RoomDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+	<bean id="imgDao" class="com.rental.dao.impl.RoomImgDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+	<bean id="msgDao" class="com.rental.dao.impl.MessageDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+	<bean id="loveDao" class="com.rental.dao.impl.LoveDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+	
+</beans>
