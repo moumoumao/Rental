@@ -24,11 +24,14 @@ public class TblCheckStream {
 	@JoinColumn(name="create_id")
 	private TblUser create;//审核人
 	
+	@Column(name="check_flag")
+	private String checkFlag;//审核者状态（提交者，一级审核，二级审核）
+	
 	@Column(name="create_date")
 	private String createDate;
 	
 	@Column(name="check_state")
-	private String checkState="未审核";//审核状态 (未审核、审核中 、 通过、打回)
+	private String checkState;//审核状态 ( 通过、打回)
 	
 	@ManyToOne
 	@JoinColumn(name="room_id")
@@ -84,6 +87,14 @@ public class TblCheckStream {
 
 	public void setCheckReason(String checkReason) {
 		this.checkReason = checkReason;
+	}
+
+	public String getCheckFlag() {
+		return checkFlag;
+	}
+
+	public void setCheckFlag(String checkFlag) {
+		this.checkFlag = checkFlag;
 	}
 	
 	

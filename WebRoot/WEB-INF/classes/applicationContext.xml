@@ -53,6 +53,7 @@
 				<value>com.rental.bean.TblUser</value>
 				<value>com.rental.bean.TblMessage</value>
 				<value>com.rental.bean.TblLove</value>
+				<value>com.rental.bean.TblComment</value>
 			</list>
 		</property>
 	</bean>
@@ -106,6 +107,9 @@
 	<bean id="roomDao" class="com.rental.dao.impl.RoomDaoImpl">
 		<property name="hibernateTemplate" ref="hibernateTemplate" />
 	</bean>
+	<bean id="checkDao" class="com.rental.dao.impl.CheckStreamDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
 	<bean id="imgDao" class="com.rental.dao.impl.RoomImgDaoImpl">
 		<property name="hibernateTemplate" ref="hibernateTemplate" />
 	</bean>
@@ -113,6 +117,9 @@
 		<property name="hibernateTemplate" ref="hibernateTemplate" />
 	</bean>
 	<bean id="loveDao" class="com.rental.dao.impl.LoveDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+	<bean id="comDao" class="com.rental.dao.impl.CommentDaoImpl">
 		<property name="hibernateTemplate" ref="hibernateTemplate" />
 	</bean>
 	

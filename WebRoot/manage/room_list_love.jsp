@@ -41,7 +41,7 @@ function findUser(pageNo,pageSize){
 	$.ajax({
 		url:'/Rental/love!findByMixAndPage.action',
 		data:{'pageBean.pageSize':pageSize,'pageBean.pageNo':pageNo,
-			'user.userId':'${rental_user.userId}'},
+			'mylove.user.userId':'${rental_user.userId}'},
 		type:'POST',
 		dataType:'JSON',
 		success:function(data){

@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
 		return userDao.findById(id);
 	}
 
-	public PageBean findByMixAndPage(TblUser user, int pageSize,
+	public PageBean findByMixAndPage(TblUser user,String starDate,String endDate, int pageSize,
 			int pageNo) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		if(user!=null){
@@ -54,6 +54,15 @@ public class UserServiceImpl implements UserService {
 			if(user.getLoginFlag()!=0){
 				map.put("loginFlag", user.getLoginFlag());
 			}
+			if(user.getCheck_flag()!=0){
+				map.put("check_flag", user.getCheck_flag());
+			}
+		}
+		if(!StringUtil.isNullOrEmpty(starDate)){
+			map.put("startDate", starDate);
+		}
+		if(!StringUtil.isNullOrEmpty(endDate)){
+			map.put("endDate",endDate);
 		}
 		return userDao.findByMixAndPage(map, pageSize, pageNo);
 	}
@@ -107,11 +116,12 @@ public class UserServiceImpl implements UserService {
 		user.setUserId(userId);
 		userDao.updateUser(user);
 	}
-	public UserDao getUserDao() {
-		return userDao;
-	}
-	public void setUserDao(UserDao userDao) {
-		this.userDao = userDao;
+
+	public void updateCheck(int checkFlag,int userId) {
+		TblUser user = userDao.findById(userId);
+		user.setCheck_flag(checkFlag);
+		user.setUserId(userId);
+		userDao.updateUser(user);
 	}
 
 

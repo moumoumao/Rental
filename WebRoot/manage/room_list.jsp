@@ -62,8 +62,12 @@ function findUser(pageNo,pageSize){
 				str+="<tr><td colspan='6'>没有检索到数据</td></tr>";
 			}else{
 				$.each(data.aaData, function(i,item){ 
-					str+='<a href="/Rental/room!findByIdForUser.action?room.roomId='+item.roomId+'" target="_blank" ><div class="panel panel-success"><div class="panel-body"><div class="info_list_left">'+
-					 '<img src="/Rental/img/img1.png" alt="通用的占位符缩略图"  class="img-thumbnail"></div>'+
+					str+='<a href="/Rental/room!findByIdForUser.action?room.roomId='+item.roomId+'" target="_blank" ><div class="panel panel-success"><div class="panel-body"><div class="info_list_left">';
+					var src='/Rental/img/img1.png';
+					if(item.imgSet.length>0){
+						src='/Rental/upload/room/'+item.imgSet[0].imgPath;
+					}
+					str+='<img src="'+src+'" alt="'+item.roomTitle+'"  class="img-thumbnail" style="width:200px;height: 150px;"></div>'+
 					'<div class="info_list_mid">'+
 					'<h4>'+item.roomTitle +'</h4>'+
 					'<span class="light">'+item.roomArea+'平方米 </span><span class="light">|</span><span class="light">'+item.roomNum+'室'+
@@ -105,29 +109,8 @@ function findUser(pageNo,pageSize){
 </head>
 <body>
 <div id="bar"></div>
-<c:forEach items="${pageBean.aaData}" var="item"> 
-<div class="panel panel-success">
-  <div class="panel-body" >
-    <div class="info_list_left">
-	 <img src="/Rental/img/img1.png" alt="通用的占位符缩略图"  class="img-thumbnail">
-	</div>
-	<div class="info_list_mid">
-	<h4>${item.roomTitle }</h4>
-	<span class="light">${item.roomArea }平方米 </span><span class="light">|</span><span class="light">${item.roomNum }室${item.hallNum }厅${item.kitchenNum }厨${item.toiletNum}卫 </span><span class="light">|</span>
-	<span class="light">${item.price }元/m </span><span class="light">|</span><span class="light">${item.floor }层 </span><span class="light">|</span>
-	<span class="light">${item.buildDate }建造 </span>
-	<div class="light" style="margin:17px; ">
-	小区名:${item.compounds }  <span style="margin: 30px;"></span>[${item.address }]
-	</div>
-	<span >发布时间： </span> <span class="light">[${item.updateDate }] </span>
-	</div>
-	<div class="info_list_right">
-	<span class="badge" >${item.viewCount }</span>
-	<div style="margin-top: 40px;">${item.price }</div>
-	</div>
-  </div>
-</div> 
-</c:forEach>  
+<div class="container" style="margin-top: 55px;" >
 <div id="userList"></div>
+</div>
 </body>
 </html>

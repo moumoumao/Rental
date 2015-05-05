@@ -29,6 +29,7 @@ import com.rental.util.StringUtil;
 	@Result(name="json",type="json",params={"root","root"}),
 	@Result(name="page",type="json",params={"root","pageBean"}),
 	@Result(name="findById" ,location="/manage/room_detail.jsp"),
+	@Result(name="findByIdForCheck" ,location="/manage/room_check.jsp"),
 	@Result(name="showRoom" ,location="/manage/room_show.jsp"),
 	@Result(name="checkStreamList" ,location="/manage/check_list.jsp")
 })
@@ -59,6 +60,8 @@ public class RoomAction extends ActionSupport {
 			room.setCreateDate(time);
 			room.setUpdate(user);
 			room.setUpdateDate(time);
+			room.setCheckFlag("未审核");
+			room.setCheckState("未审核");
 			TblRoom obj = roomService.addRoom(room);
 			root.put("resultCode", 200);
 			root.put("msg", "新增房源成功！");
@@ -71,7 +74,7 @@ public class RoomAction extends ActionSupport {
 		return "json";
 	}
 	/**
-	 * 更新房源信息
+	 * 更新房源信息(填room的所有信息)
 	 * @return
 	 */
 	public String updateInfo(){
@@ -146,11 +149,19 @@ public class RoomAction extends ActionSupport {
 		return "findById";
 	}
 	/**
+	 * 房源审核详情页面（返回room_check.jsp）
+	 * @return
+	 */
+	public String findByIdForCheck(){
+		room = roomService.findById(room.getRoomId());
+		return "findByIdForCheck";
+	}
+	/**
 	 * 根据Id查找（普通用户查看，游客查看showRoom）
 	 * @return
 	 */
 	public String findByIdForUser(){
-		room = roomService.findById(room.getRoomId());
+		room = roomService.findByIdForUser(room.getRoomId());
 		return "showRoom";
 	}
 	/**

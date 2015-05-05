@@ -25,6 +25,13 @@ public interface UserService {
 	 * @return
 	 */
 	public TblUser updateUser(TblUser user)  ;
+	/**
+	 * 更新用户审核等级
+	 * 
+	 * @param user
+	 * @return
+	 */
+	public void updateCheck(int checkFlag,int userId)  ;
 
 	/**
 	 * 根据Id删除用户
@@ -48,7 +55,7 @@ public interface UserService {
 	 * @param pageNo
 	 * @return
 	 */
-	public PageBean  findByMixAndPage(TblUser user,
+	public PageBean  findByMixAndPage(TblUser user,String starDate,String endDate,
 			int pageSize, int pageNo)  ;
 	/**
 	 * 是否存在

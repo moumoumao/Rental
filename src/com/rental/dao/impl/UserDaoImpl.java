@@ -41,9 +41,9 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
 		Set<String> paramNameSet = map.keySet();
 		for(String paramName : paramNameSet){
 			if(paramName.equals("startDate")){
-				sql.append(" and o.createDate >=:").append(paramName);
+				sql.append(" and o.lastDate >=:").append(paramName);
 			}else if(paramName.equals("endDate")){
-				sql.append(" and o.createDate <=:").append(paramName);
+				sql.append(" and o.lastDate <=:").append(paramName);
 			}else{
 				if(map.get(paramName).getClass().equals(Integer.class)){
 					sql.append(" and o.").append(paramName).append(" =:").append(paramName.replace(".", "_"));

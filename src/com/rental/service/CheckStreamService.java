@@ -22,11 +22,17 @@ public interface CheckStreamService {
 	public 	PageBean  findByMixAndPage(Map<String, Object> map,
 			int pageSize, int pageNo) ;
 	/**
-	 * 新增
+	 * 新增（审核员）
 	 * @param stream
 	 * @return
 	 */
-	public TblCheckStream addStream( TblCheckStream stream);
+	public TblCheckStream addStreamByCheck( TblCheckStream stream);
+	/**
+	 * 提交审核
+	 * @param stream
+	 * @return
+	 */
+	public TblCheckStream addStreamByCreate( TblCheckStream stream);
 	/**
 	 * 删除
 	 * @param stream

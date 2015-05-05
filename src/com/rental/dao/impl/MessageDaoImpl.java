@@ -35,6 +35,7 @@ public class MessageDaoImpl extends HibernateDaoSupport implements MessageDao {
 		return super.getHibernateTemplate().get(TblMessage.class, id);
 	}
 
+	@SuppressWarnings("unchecked")
 	public PageBean findByMixAndPage(Map<String, Object> map, int pageSize,
 			int pageNo) {
 		// 查询数据sql

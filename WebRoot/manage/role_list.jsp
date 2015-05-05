@@ -80,7 +80,7 @@ function deleteRole(id){
 
 }
 function addrole(){
-	window.location.href="role_create1.jsp";
+	window.location.href="role_create.jsp";
 }
 </script>
 </head>

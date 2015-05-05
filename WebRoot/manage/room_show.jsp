@@ -71,6 +71,7 @@ $(function(){
 	addBar('bar',name);
 	var userId=${rental_user.userId};
 	var roomId=${room.roomId};
+	$('.roomID').val(roomId);
 	//收藏
 	$('#bt_love').click(function(){
 		$.ajax({
@@ -199,14 +200,15 @@ function subForm(){
 	var title=$('#modalTitle').html();
 	var formName='';
 	
-	if(title='发送消息'){
+	if(title=='发送消息'){
 		formName='sendForm';
-	}else if(title='发布评论'){
+	}else if(title=='发布评论'){
 		formName='plForm';
-	}else if('新增预约'){
+	}else if(title=='新增预约'){
 		formName='appointForm';
 	}
 	var ii = layer.load();
+	alert($('#'+formName).serialize());
 	$('#'+formName).ajaxSubmit({
            success: function(data) {
                layer.close(ii);
@@ -392,6 +394,7 @@ function subForm(){
             <h4 class="modal-title" id="modalTitle">发送消息</h4>
          </div>
          <div class="modal-body" id="body">
+         <!-- 消息开始 -->
          <form action="/Rental/msg!sendMsg.action" role="form" method="post" id="sendForm">
           <table class="table">
 		  	<tr>
@@ -404,15 +407,21 @@ function subForm(){
 		  	</tr>
 		  </table>
          </form>
-         <form action="/Rental/msg!sendMsg.action" role="form" method="post" id="plForm">
+         <!-- 消息结束 -->
+         <!-- 评论开始 -->
+         <form action="/Rental/comment!addComment.action" role="form" method="post" id="plForm">
+         <input type="hidden" name="mycomment.room.roomId" class="roomID">
           <table class="table">
 		  	<tr>
 		  		<td>内容：</td>
-		  		<td><textarea type="text" class="form-control" id="desc" name="message.mesContent"></textarea></td>
+		  		<td><textarea type="text" class="form-control" id="desc" name="mycomment.comContent"></textarea></td>
 		  	</tr>
 		  </table>
          </form>
+         <!-- 评论结束 -->
+         <!-- 预约开始 -->
          <form action="/Rental/msg!sendMsg.action" role="form" method="post" id="appointForm">
+         <input type="hidden" name="" class="roomID">
           <table class="table">
 		  	<tr>
 		  		<td>预约人数：</td>
@@ -432,6 +441,7 @@ function subForm(){
 		  	</tr>
 		  </table>
          </form>
+         <!-- 预约结束 -->
          </div>
          <div class="modal-footer">
             <button type="button" class="btn btn-default" 

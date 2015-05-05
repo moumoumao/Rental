@@ -49,4 +49,9 @@ public interface RoomService {
 	 */
 	public PageBean  findByMixAndPage(Map<String, Object> map,
 			int pageSize, int pageNo)  ;
+	/**
+	 * 根据Id查找（普通用户查看，游客查看showRoom）
+	 * @return
+	 */
+	public TblRoom findByIdForUser(int id);
 }

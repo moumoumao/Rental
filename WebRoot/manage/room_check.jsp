@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="/Rental/css/bootstrap.min.css" type="text/css"></link>
 <link rel="stylesheet" href="/Rental/css/bootstrap-theme.min.css" type="text/css"></link>
 <link rel="stylesheet" href="../css/bootstrap-datetimepicker.css" type="text/css"></link>
-<title>房源审核详情</title>
+<title>房源详情</title>
 <script src="/Rental/js/jquery-1.9.1.js"></script>
 <script src="/Rental/js/bootstrap.min.js"></script>
 <script src="/Rental/js/bootstrap-datetimepicker.js"></script>
@@ -80,6 +80,54 @@ function uploadImg(type){
 		}
 	});  
 }
+function deleteRoom(id){
+	layer.confirm('确定要删除这条数据吗？',{icon:4,title:'提示'},function(){
+		var ii = layer.load('加载中');
+		$.ajax({
+			url:'/Rental/room!deleteById.action',
+			data:{'room.roomId':id},
+			type:'POST',
+			dataType:'JSON',
+			success:function(data){
+				layer.close(ii);
+				layer.msg(data.msg);
+				if(data.resultCode==200){
+					$('#back').click();
+		        }
+				
+			}
+		});
+	});
+}
+/**
+ * 提交审核
+ */
+function updateCheck(id){
+	layer.confirm('确定要删除这条数据吗？',{icon:4,title:'提示'},function(){
+		var ii = layer.load('加载中');
+		$.ajax({
+			url:'/Rental/check!addStreamByCreate.action',
+			data:{'check.room.roomId':id},
+			type:'POST',
+			dataType:'JSON',
+			success:function(data){
+				layer.close(ii);
+				layer.msg(data.msg);
+				if(data.resultCode==200){
+					$('#back').click();
+		        }
+				
+			}
+		});
+	});
+	
+}
+/**
+ * 修改房源信息
+ */
+function updateInfo(){
+	
+}
 </script>
   </head>
   
@@ -92,16 +140,20 @@ function uploadImg(type){
 			    <button type="button" class="btn btn-default " id="back" >
 				  <span class="glyphicon glyphicon-arrow-left"></span>返回
 				</button>
-			    <button type="button" class="btn btn-primary" >
-				  <span class="glyphicon glyphicon-share" ></span>提交审核
-				</button>
-				<button type="button" class="btn btn-success" >
-				  <span class="glyphicon glyphicon-edit" ></span>修改信息
-				</button>
-				<button type="button" class="btn btn-danger" >
-				  <span class="glyphicon glyphicon-trash" ></span>删除
-				</button>
-				
+				<c:if test="${room.checkFlag=='未审核'}">
+					<button type="button" class="btn btn-primary" onclick="updateCheck(${room.roomId});">
+				  	 <span class="glyphicon glyphicon-share" ></span>提交审核
+					</button>
+					
+				</c:if>
+				<c:if test="${room.checkFlag=='未审核'or room.checkState=='打回'}">
+					<button type="button" class="btn btn-success" id="updateInfo();">
+					  <span class="glyphicon glyphicon-edit" ></span>修改信息
+					</button>
+					<button type="button" class="btn btn-danger" onclick="deleteRoom(${room.roomId});">
+					  <span class="glyphicon glyphicon-trash" ></span>删除
+					</button>
+				</c:if>
 			  </div>
 	  </div>
 	</div>

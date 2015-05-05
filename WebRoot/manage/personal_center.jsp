@@ -60,6 +60,16 @@ function getMenuHeight(){
 					</a>
 				</li>
 				<li class="childUlLi">
+					<a href="room_list_comment.jsp" target="menuFrame2">
+						<i class="glyphicon glyphicon-edit"></i>我的评论
+					</a>
+				</li>
+				<li class="childUlLi">
+					<a href="room_list_check.jsp" target="menuFrame2">
+						<i class="glyphicon glyphicon-check"></i>房源审核
+					</a>
+				</li>
+				<li class="childUlLi">
 					<a href="user_list.jsp" target="menuFrame2">
 						<i class="glyphicon glyphicon-user"></i>用户管理
 					</a>

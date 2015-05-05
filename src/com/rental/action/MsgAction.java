@@ -43,7 +43,7 @@ public class MsgAction extends ActionSupport {
 			message.setCreateDate(DateUtil.toYMD(new Date().getTime()));
 			TblMessage obj = msgService.addMessage(message);
 			root.put("resultCode", 200);
-			root.put("msg", "新增区域成功！");
+			root.put("msg", "新增信息成功！");
 			root.put("data", obj);
 		}catch (Exception e) {
 			root.put("resultCode", 500);

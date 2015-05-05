@@ -31,9 +31,8 @@ public class UserAction extends ActionSupport {
 	private TblUser user;
 	private Map<String, Object> root;
 	private PageBean pageBean;
-//	private int length;
-//	private int start;
-//	private int draw;
+	private String startDate;//创建时间范围
+	private String endDate;
 	/**
 	 * 新增用户
 	 * @return
@@ -65,6 +64,9 @@ public class UserAction extends ActionSupport {
 			if(user==null){
 				root.put("resultCode", 201);
 				root.put("msg", "用户名或密码错误！");
+			}else if(user.getLoginFlag()!=1){
+				root.put("resultCode", 201);
+				root.put("msg", "该用户已被屏蔽！");
 			}else{
 				ActionContext.getContext().getSession().put("rental_user",user);
 				root.put("resultCode", 200);
@@ -109,6 +111,24 @@ public class UserAction extends ActionSupport {
 		root = new HashMap<String, Object>();
 		try{
 			service.updateLogonFlag(user.getLoginFlag(),user.getUserId());
+			root.put("resultCode", 200);
+			root.put("msg", "更新成功！");
+		}catch (Exception e) {
+			root.put("resultCode", 500);
+			root.put("msg", "系统异常！");
+			return "json";
+		}
+		return "json";
+	}
+
+	/**
+	 * 修改用户审核等级
+	 * @return
+	 */
+	public String updateCheckFlag(){
+		root = new HashMap<String, Object>();
+		try{
+			service.updateCheck(user.getCheck_flag(),user.getUserId());
 			root.put("resultCode", 200);
 			root.put("msg", "更新成功！");
 		}catch (Exception e) {
@@ -185,15 +205,8 @@ public class UserAction extends ActionSupport {
 	 * @return
 	 */
 	public String findByMixAndPage(){
-		pageBean = service.findByMixAndPage(user, pageBean.getPageSize(), pageBean.getPageNo());
+		pageBean = service.findByMixAndPage(user,startDate,endDate, pageBean.getPageSize(), pageBean.getPageNo());
 		return "page";
-	}
-	public UserServiceImpl getService() {
-		return service;
-	}
-
-	public void setService(UserServiceImpl service) {
-		this.service = service;
 	}
 
 	public TblUser getUser() {
@@ -218,6 +231,22 @@ public class UserAction extends ActionSupport {
 
 	public void setPageBean(PageBean pageBean) {
 		this.pageBean = pageBean;
+	}
+
+	public String getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+
+	public String getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
 	}
 	
 }

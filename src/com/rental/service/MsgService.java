@@ -1,8 +1,5 @@
 package com.rental.service;
 
-import java.util.List;
-import java.util.Map;
-
 import com.rental.util.PageBean;
 import com.rental.bean.TblMessage;;
 

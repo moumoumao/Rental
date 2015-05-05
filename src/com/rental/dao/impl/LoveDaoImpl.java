@@ -21,11 +21,11 @@ public class LoveDaoImpl extends HibernateDaoSupport  implements LoveDao {
 	}
 
 	public void deleteLove(TblLove love) {
-		//love = super.getHibernateTemplate().get(TblLove.class, love.getLoveId());
 		super.getHibernateTemplate().delete(love);
 
 	}
 	
+	@SuppressWarnings("unchecked")
 	public PageBean findByMixAndPage(Map<String, Object> map, int pageSize,
 			int pageNo) {
 		// 查询数据sql

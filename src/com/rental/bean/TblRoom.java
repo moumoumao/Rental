@@ -78,10 +78,11 @@ public class TblRoom {
 	
 	//审核开始
 	@Column(name="check_flag")
-	private String checkFlag="未审核";//审核状态（未审核，一级审核，二级审核）
+	private String checkFlag;//审核状态（未审核，提交审核,一级审核，二级审核）
 	
 	@Column(name="check_state")
-	private String checkState="未审核";//审核结果（通过、拒绝、未审核、审核中）
+	private String checkState;
+	//审核结果（通过、打回）（这里的审核中指已提交审核，在一级审核后没有用处）（审核中由页面计算显示）
 	
 	//审核结束
 	@ManyToOne
@@ -102,7 +103,7 @@ public class TblRoom {
 	private int viewCount=0;
 	
 	@OrderBy("imgStyle")
-	@OneToMany(cascade=CascadeType.MERGE, mappedBy="room",fetch=FetchType.EAGER)
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="room",fetch=FetchType.EAGER)
 	private Set<TblRoomImage> imgSet=new HashSet<TblRoomImage>();//楼盘图片集合
 
 	public int getRoomId() {

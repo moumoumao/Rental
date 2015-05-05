@@ -63,8 +63,8 @@ function findUser(pageNo,pageSize){
 			}else{
 				$.each(data.aaData, function(i,obj){      
 					str+="<tr><td>"+isNullStr(obj.roomId)+" </td>"+"<td>"+isNullStr(obj.roomTitle)+" </td>"+
-					"<td>"+isNullStr(obj.checkState)+" </td>"+"<td>"+isNullStr(obj.create.userName)+" </td>"+
-					"<td>"+isNullStr(obj.createDate)+" </td>"+"<td>"+
+					"<td>"+isNullStr(obj.checkFlag)+" </td>"+"<td>"+isNullStr(obj.checkState)+" </td>"+
+					"<td>"+isNullStr(obj.create.userName)+" </td>"+"<td>"+isNullStr(obj.createDate)+" </td>"+"<td>"+
 					"<a href='javascript:showRoom("+obj.roomId+")'><span class='glyphicon glyphicon-search green'></span></a>  &nbsp;  "+
 					" &nbsp;  <a href='javascript:deleteRoom("+obj.roomId+");'><span class='glyphicon glyphicon-remove red'></span></a>"+
 					" &nbsp;  <a href='javascript:showCheck("+obj.roomId+");'><span class='glyphicon glyphicon-eye-open green'></span></a>"+" </td></tr>";
@@ -177,6 +177,7 @@ function showCheck(id){
 		            <th>房源ID</th>
 		            <th>标题</th>
 		            <th>审核状态</th>
+		            <th>审核结果</th>
 		            <th>创建者</th>
 		            <th>创建时间</th>
 		            <th >操作</th>

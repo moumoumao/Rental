@@ -22,11 +22,11 @@ public class CheckStreamDaoImpl extends HibernateDaoSupport implements
 	}
 
 	public void deleteStream(TblCheckStream stream) {
-		TblCheckStream obj = super.getHibernateTemplate().get(TblCheckStream.class, stream.getCheckId());
 		super.getHibernateTemplate().delete(stream);
 
 	}
 
+	@SuppressWarnings("unchecked")
 	public PageBean findByMixAndPage(Map<String, Object> map, int pageSize,
 			int pageNo) {
 		// 查询数据sql

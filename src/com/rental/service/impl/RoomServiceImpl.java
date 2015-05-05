@@ -46,4 +46,15 @@ public class RoomServiceImpl implements RoomService {
 		roomDao.updateRoom(room);
 	}
 
+	public TblRoom findByIdForUser(int id) {
+		TblRoom room = roomDao.findById(id);
+		room.setViewCount(room.getViewCount()+1);
+		roomDao.updateRoom(room);
+		return room;
+	}
+	public void updateCheck(String checkFlag, String checkState) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
